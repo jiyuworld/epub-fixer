@@ -79,7 +79,7 @@ export const EditForm: React.FC<EditFormProps> = ({ sentence, onSave, onCancel }
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                <div className="edit-form-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
                     <button
                         type="button"
                         onClick={onCancel}

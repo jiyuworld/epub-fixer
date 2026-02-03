@@ -6,12 +6,14 @@ import { FileUploader } from './components/FileUploader';
 import { SearchBar } from './components/SearchBar';
 import { SentenceList } from './components/SentenceList';
 import { EditForm } from './components/EditForm';
+import { RevisionReviewModal } from './components/RevisionReviewModal';
 
 function App() {
   const [epubData, setEpubData] = useState<EpubData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSentence, setSelectedSentence] = useState<SentenceItem | null>(null);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   // Store revisions: ID -> New Text
   const [revisions, setRevisions] = useState<Map<string, string>>(new Map());
@@ -42,7 +44,7 @@ function App() {
     setSelectedSentence(null); // Close form
   };
 
-  const handleDownload = async () => {
+  const executeDownload = async () => {
     if (!epubData) return;
     setIsLoading(true);
     try {
@@ -55,6 +57,7 @@ function App() {
       alert('Failed to generate EPUB.');
     } finally {
       setIsLoading(false);
+      setIsReviewModalOpen(false);
     }
   };
 
@@ -110,13 +113,13 @@ function App() {
         </div>
       ) : (
         <div className="workspace animate-fade-in">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+          <div className="workspace-header">
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Working on:</div>
               <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{epubData.fileName}</div>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div className="workspace-header-actions">
               <button
                 onClick={() => {
                   if (confirm('모든 작업 내용을 초기화하고 파일을 다시 선택하시겠습니까?')) {
@@ -128,9 +131,9 @@ function App() {
                 <RefreshCw size={18} />
               </button>
 
-              <button onClick={handleDownload} disabled={revisions.size === 0 || isLoading}>
+              <button onClick={() => setIsReviewModalOpen(true)} disabled={revisions.size === 0 || isLoading}>
                 <Download size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} />
-                EPUB 저장 ({revisions.size} 수정한 문장)
+                EPUB 저장 (수정한 문장 {revisions.size}개)
               </button>
             </div>
           </div>
@@ -160,6 +163,16 @@ function App() {
           )}
 
         </div>
+      )}
+
+      {epubData && (
+        <RevisionReviewModal
+          isOpen={isReviewModalOpen}
+          onClose={() => setIsReviewModalOpen(false)}
+          onConfirm={executeDownload}
+          revisions={revisions}
+          sentences={epubData.sentences}
+        />
       )}
     </div>
   );

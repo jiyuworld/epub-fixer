@@ -258,3 +258,138 @@ textarea:focus {
 .animate-fade-in {
   animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Modal Classes */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.modal-content {
+  background-color: var(--bg-card, white);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.revision-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.workspace-header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  /* Workspace Header Mobile */
+  .workspace-header {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .workspace-header>div:first-child {
+    text-align: center !important;
+  }
+
+  .workspace-header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .workspace-header-actions button {
+    width: 100%;
+  }
+
+  /* Revision Modal Mobile */
+  .modal-content {
+    padding: 1.25rem;
+    max-height: 90vh;
+  }
+
+  .revision-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .revision-arrow {
+    transform: rotate(90deg);
+    padding: 0.5rem 0 !important;
+  }
+
+  /* Edit Form Mobile */
+  .edit-form-actions {
+    flex-direction: column-reverse;
+    /* Stack, typically cancel at bottom or maintain order? keeping separate for now */
+  }
+
+  .edit-form-actions button {
+    width: 100%;
+  }
+
+  /* Modal Actions Mobile */
+  .modal-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
