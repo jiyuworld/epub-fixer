@@ -54,7 +54,11 @@ export const SentenceList: React.FC<SentenceListProps> = ({ sentences, searchTer
                     className="sentence-item"
                 >
                     {/* Highlight match */}
-                    <div dangerouslySetInnerHTML={{
+                    <div style={{
+                        wordBreak: 'break-word',
+                        overflowWrap: 'anywhere',
+                        lineHeight: '1.5'
+                    }} dangerouslySetInnerHTML={{
                         __html: highlightMatch(item.text, searchTerm)
                     }} />
                     <div style={{
