@@ -305,5 +305,12 @@ export async function generateFixedEpub(data: EpubData, revisedSentences: Map<st
         zip.file(filePath, newContent);
     }
 
-    return await zip.generateAsync({ type: 'blob', mimeType: 'application/epub+zip' });
+    return await zip.generateAsync({
+        type: 'blob',
+        mimeType: 'application/epub+zip',
+        compression: 'DEFLATE',
+        compressionOptions: {
+            level: 6
+        }
+    });
 }
